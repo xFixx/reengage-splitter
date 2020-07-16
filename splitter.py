@@ -1,7 +1,6 @@
 import numpy as np
 from sklearn import preprocessing
-from scipy.stats import bartlett
-import itertools
+from scipy.stats import levene
 
 
 import grabber as gr
@@ -40,37 +39,39 @@ csv с user_id соответвующего названия.
 """
 
 
-def split_test_save_riders():
+def shuffle_test(tmp, v):
+    n = 1
+    while True:
+        print(f"Shuffle number {n}")
+        shuffled = tmp.sample(frac=1, replace=False, weights=tmp.groupby(
+            'homo_t')['homo_t'].transform('count'))
+        result = np.array_split(shuffled, v)
+        test_arr = [x['homo_t'].values for x in result]
+        stat, p = levene(*test_arr)
+        print(stat, p)
+        n += 1
+        if p > 0.05:
+            return result
+            break
+
+
+def split_save_riders():
     df = gr.get_riders_seg()
     riders_chunks = {'SEG1': 2, 'SEG2': 8, 'SEG3': 2, 'SEG4': 2, 'SEG5': 10,
                      'SEG6': 8, 'SEG7': 2, 'SEG8': 2, 'SEG9': 2}
 
     for k, v in riders_chunks.items():
-        print(k, v)
         tmp = df.copy(deep=True)
         tmp = tmp[tmp['segment'].str.contains(k)]
         tmp.drop(columns=['segment'], inplace=True)
         tmp = preproc_riders_for_split(tmp)
         tmp.set_index('user_id', inplace=True)
-        shuffled = tmp.sample(frac=1, replace=False, weights=tmp.groupby(
-            'homo_t')['homo_t'].transform('count'))
-        result = np.array_split(shuffled, v)
-        pvals = []
-        for x, y in itertools.combinations(result, 2):
-            T, p_value = bartlett(x['homo_t'], y['homo_t'])
-            pvals.append(float(p_value))
-        print(pvals)
-        if all(i > 0.05 for i in pvals):
-            print(f"All {v} chunks in {k} are in equal variance according to \
-    Bartlett test with p > 0.05")
-            print('Saving chunks...')
-            names = [k + '_' + str(n) + '.csv' for n in range(1, v+1)]
-            for part, name in zip(result, names):
-                part.drop(columns=['homo_t'], inplace=True)
-                part.to_csv(name, encoding='utf-8')
-        else:
-            print('Barlett test has failed, reshuffle manually!')
-            break
-
-
-split_test_save_riders()
+        print(f"Sampling {v} chunks in {k}")
+        result = shuffle_test(tmp, v)
+        print(f"All {v} chunks in {k} are in equal variance according to \
+Levene test")
+        print('Saving chunks...')
+        names = [k + '_' + str(n) + '.csv' for n in range(1, v+1)]
+        for part, name in zip(result, names):
+            part.drop(columns=['homo_t'], inplace=True)
+            part.to_csv(name, encoding='utf-8')

@@ -113,7 +113,7 @@ def get_riders_seg():
         df = add_riders_segment(df)
         df = process_frame(df)
         df.to_csv(file, encoding='utf-8', index=False)
-    print(df.info())
+    # print(df.info())
     print(df.groupby(['segment']).size())
     return df
 
@@ -168,6 +168,6 @@ def get_dormants_seg():
         df = add_dormants_segment(df)
         df = process_frame(df)
         df.to_csv(file, encoding='utf-8', index=False)
-    print(df.info())
+    # print(df.info())
     print(df.groupby(['segment']).size())
     return df

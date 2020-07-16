@@ -1,6 +1,8 @@
 import numpy as np
 from sklearn import preprocessing
 from scipy.stats import bartlett
+import itertools
+
 
 import grabber as gr
 
@@ -31,8 +33,8 @@ def preproc_riders_for_split(tmp):
 
 
 """
-Функция разбивает фрейм на заданное кол-во подгруппу в каждом сегменте,
-тестирует гомогенность подсегмента относительно сегмента и сохраняет
+Функция разбивает фрейм на заданное кол-во подгрупп в каждом сегменте.
+Тестирует гомогенность подсегментов относительно друг друга и сохраняет
 csv с user_id соответвующего названия.
 Если условие гомогенности нарушено - файлы не будут сохранены.
 """
@@ -51,12 +53,11 @@ def split_test_save_riders():
         tmp = preproc_riders_for_split(tmp)
         tmp.set_index('user_id', inplace=True)
         shuffled = tmp.sample(frac=1, replace=False, weights=tmp.groupby(
-            'homo_t')['homo_t'].transform('count'), random_state=1)
+            'homo_t')['homo_t'].transform('count'))
         result = np.array_split(shuffled, v)
         pvals = []
-        print(type(result))
-        for part in result:
-            T, p_value = bartlett(part['homo_t'], tmp['homo_t'])
+        for x, y in itertools.combinations(result, 2):
+            T, p_value = bartlett(x['homo_t'], y['homo_t'])
             pvals.append(float(p_value))
         print(pvals)
         if all(i > 0.05 for i in pvals):
@@ -70,3 +71,6 @@ def split_test_save_riders():
         else:
             print('Barlett test has failed, reshuffle manually!')
             break
+
+
+split_test_save_riders()

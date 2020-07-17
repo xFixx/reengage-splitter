@@ -3,8 +3,6 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
-pd.options.display.float_format = "{:.2f}".format
-
 
 """
 Функция обращается к BQ и возвращает df
@@ -32,6 +30,7 @@ def process_frame(df):
     df['is_male'] = (df['gender'] == 'm').astype(int)
     df.drop(columns=['platform', 'gender'], inplace=True)
     df['has_bb'] = df['has_bb'].astype(int)
+    df.set_index('user_id', inplace=True)
     return df
 
 
@@ -106,13 +105,15 @@ def get_riders_seg():
     file = 'riders.csv'
     if Path(file).is_file():
         df = pd.read_csv(file, encoding='utf-8')
+        df.set_index('user_id', inplace=True)
         print("File exist")
     else:
-        print("File not exist")
+        print("File not exist, downloading...")
         df = get_df_from_bq(QUERY)
         df = add_riders_segment(df)
         df = process_frame(df)
-        df.to_csv(file, encoding='utf-8', index=False)
+        df.to_csv(file, encoding='utf-8')
+
     # print(df.info())
     print(df.groupby(['segment']).size())
     return df
@@ -161,13 +162,14 @@ def get_dormants_seg():
     file = 'dormants.csv'
     if Path(file).is_file():
         df = pd.read_csv(file, encoding='utf-8')
+        df.set_index('user_id', inplace=True)
         print("File exist")
     else:
-        print("File not exist")
+        print("File not exist, downloading...")
         df = get_df_from_bq(QUERY)
         df = add_dormants_segment(df)
         df = process_frame(df)
-        df.to_csv(file, encoding='utf-8', index=False)
+        df.to_csv(file, encoding='utf-8')
     # print(df.info())
     print(df.groupby(['segment']).size())
     return df

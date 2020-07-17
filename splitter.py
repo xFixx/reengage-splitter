@@ -1,41 +1,45 @@
+import grabber as gr
 import numpy as np
+import pandas as pd
 from sklearn import preprocessing
 from scipy.stats import levene
+import os
 
-
-import grabber as gr
+pd.options.display.float_format = "{:.8f}".format
 
 """
 Функция добавляет в фрейм синтетический столбец из сумм нормализованных
-критериев гомогенности, для достижения бизнесс требований:
-- равное кол-во участиков в группах
-
-Так же столбец служит для тестирования гомогенности относительно сегмента.
+критериев гомогенности, для разбиения сегментов на равное кол-во
+участиков в группах. Так же столбец служит для тестирования гомогенности.
 """
 
 
-def preproc_riders_for_split(tmp):
-    for i in ['ltv', 'since_rent', 'age']:
-        x = tmp[[i]].values.astype(float)  # returns a numpy array
-        min_max_scaler = preprocessing.MinMaxScaler()
-        x_scaled = min_max_scaler.fit_transform(x)
-        col = i + '_norm'
-        tmp[col] = x_scaled.astype(float)
-    cols_to_float = ['is_ios', 'is_male', 'has_bb']
-    for i in cols_to_float:
-        tmp[i] = tmp[i].astype('float64')
-    tmp['homo_t'] = tmp['is_ios'] + tmp['is_male'] + \
-        tmp['ltv_norm'] + tmp['since_rent_norm'] + tmp['age_norm'] + \
-        tmp['has_bb']
-    df = tmp[['user_id', 'homo_t']]
+def add_synth_test_col(tmp):
+    if 'ltv' in tmp.columns:
+        for i in ['ltv', 'since_rent', 'age']:
+            x = tmp[[i]].values.astype(float)  # returns a numpy array
+            min_max_scaler = preprocessing.MinMaxScaler()
+            x_scaled = min_max_scaler.fit_transform(x)
+            col = i + '_norm'
+            tmp[col] = x_scaled.astype(float)
+            tmp.drop(columns=[i], inplace=True)
+    else:
+        for i in ['age']:
+            x = tmp[[i]].values.astype(float)  # returns a numpy array
+            min_max_scaler = preprocessing.MinMaxScaler()
+            x_scaled = min_max_scaler.fit_transform(x)
+            col = i + '_norm'
+            tmp[col] = x_scaled.astype(float)
+            tmp.drop(columns=['dsa', 'age'], inplace=True)
+    tmp['homo_t'] = tmp[list(tmp.columns)].sum(axis=1)
+    df = tmp[['homo_t']]
+    print(df['homo_t'].describe())
     return df
 
 
 """
-Функция разбивает фрейм на заданное кол-во подгрупп в каждом сегменте.
-Тестирует гомогенность подсегментов относительно друг друга и сохраняет
-csv с user_id соответвующего названия.
-Если условие гомогенности нарушено - файлы не будут сохранены.
+Функция разбивает фрейм на заданное кол-во подгрупп в каждом сегменте n раз
+до получения статистически не различимых вариантов в подгруппах
 """
 
 
@@ -48,24 +52,30 @@ def shuffle_test(tmp, v):
         result = np.array_split(shuffled, v)
         test_arr = [x['homo_t'].values for x in result]
         stat, p = levene(*test_arr)
-        print(stat, p)
+        pyval = p.item()
+        print('p-value due to Levene test:')
+        print('{0:40f}'.format(pyval))
         n += 1
-        if p > 0.05:
+        if pyval > 0.05:
             return result
+            break
+        elif n > 5:
             break
 
 
-def split_save_riders():
-    df = gr.get_riders_seg()
-    riders_chunks = {'SEG1': 2, 'SEG2': 8, 'SEG3': 2, 'SEG4': 2, 'SEG5': 10,
-                     'SEG6': 8, 'SEG7': 2, 'SEG8': 2, 'SEG9': 2}
+"""
+Функция итерируется по df согласно списку сегментов, для каждого эл-та списка
+создает гомогенные подгруппы и сохраняет их в csv.
+"""
 
-    for k, v in riders_chunks.items():
+
+def split_save(df, chunks):
+
+    for k, v in chunks.items():
         tmp = df.copy(deep=True)
         tmp = tmp[tmp['segment'].str.contains(k)]
         tmp.drop(columns=['segment'], inplace=True)
-        tmp = preproc_riders_for_split(tmp)
-        tmp.set_index('user_id', inplace=True)
+        tmp = add_synth_test_col(tmp)
         print(f"Sampling {v} chunks in {k}")
         result = shuffle_test(tmp, v)
         print(f"All {v} chunks in {k} are in equal variance according to \
@@ -74,4 +84,18 @@ Levene test")
         names = [k + '_' + str(n) + '.csv' for n in range(1, v+1)]
         for part, name in zip(result, names):
             part.drop(columns=['homo_t'], inplace=True)
-            part.to_csv(name, encoding='utf-8')
+            outdir = './segments'
+            if not os.path.exists(outdir):
+                os.mkdir(outdir)
+            part.to_csv(os.path.join(outdir, name), encoding='utf-8')
+
+
+if __name__ == "__main__":
+
+    df = gr.get_riders_seg()
+    chunks = {'SEG1': 2, 'SEG2': 8, 'SEG3': 2, 'SEG4': 2, 'SEG5': 10,
+              'SEG6': 8, 'SEG7': 2, 'SEG8': 2, 'SEG9': 2}
+    split_save(df, chunks)
+    df = gr.get_dormants_seg()
+    chunks = {'SEG10': 2, 'SEG11': 12, 'SEG12': 12}
+    split_save(df, chunks)

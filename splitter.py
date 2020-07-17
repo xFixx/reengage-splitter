@@ -1,5 +1,4 @@
 import grabber as gr
-import numpy as np
 import pandas as pd
 from sklearn import preprocessing
 from scipy.stats import levene
@@ -84,7 +83,7 @@ def split_save(df, chunks):
         result = shuffle_test(tmp, v)
         if result:
             print(f"All {v} chunks in {k} are in equal variance according to \
-    Levene test")
+Levene test")
             print('Saving chunks...')
             names = [k + '_' + str(n) + '.csv' for n in range(1, v+1)]
             for part, name in zip(result, names):

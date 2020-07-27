@@ -13,28 +13,26 @@ pd.options.display.float_format = "{:.8f}".format
 """
 
 
-def add_synth_test_col(tmp):
-    print(tmp.head(10))
-    if 'ltv' in tmp.columns:
-        for i in ['ltv', 'since_rent', 'age']:
-            x = tmp[[i]].values.astype(float)  # returns a numpy array
-            min_max_scaler = preprocessing.MinMaxScaler()
-            x_scaled = min_max_scaler.fit_transform(x)
-            col = i + '_norm'
-            tmp[col] = x_scaled.astype(float)
-            tmp.drop(columns=[i], inplace=True)
-    else:
-        print('Here')
-        for i in ['age', 'dsa']:
-            x = tmp[[i]].values.astype(float)  # returns a numpy array
-            min_max_scaler = preprocessing.MinMaxScaler()
-            x_scaled = min_max_scaler.fit_transform(x)
-            col = i + '_norm'
-            tmp[col] = x_scaled.astype(float)
-            tmp.drop(columns=[i], inplace=True)
-    tmp['homo_t'] = tmp[list(tmp.columns)].sum(axis=1)
-    df = tmp[['homo_t']]
-    return df
+# def add_synth_test_col(tmp):
+#     if 'ltv' in tmp.columns:
+#         for i in ['ltv', 'since_rent', 'age']:
+#             x = tmp[[i]].values.astype(float)  # returns a numpy array
+#             min_max_scaler = preprocessing.MinMaxScaler()
+#             x_scaled = min_max_scaler.fit_transform(x)
+#             col = i + '_norm'
+#             tmp[col] = x_scaled.astype(float)
+#             tmp.drop(columns=[i], inplace=True)
+#     else:
+#         for i in ['age', 'dsa']:
+#             x = tmp[[i]].values.astype(float)  # returns a numpy array
+#             min_max_scaler = preprocessing.MinMaxScaler()
+#             x_scaled = min_max_scaler.fit_transform(x)
+#             col = i + '_norm'
+#             tmp[col] = x_scaled.astype(float)
+#             tmp.drop(columns=[i], inplace=True)
+#     tmp['homo_t'] = tmp[list(tmp.columns)].sum(axis=1)
+#     df = tmp[['homo_t']]
+#     return df
 
 
 """
@@ -54,16 +52,33 @@ def shuffle_test(tmp, v):
             tmp.drop(i.index, inplace=True)
             result.append(i)
         result.append(tmp)
-        test_arr = [x['homo_t'].values for x in result]
-        stat, p = levene(*test_arr)
-        pyval = p.item()
-        print('p-value due to Levene test:', '{0:4f}'.format(pyval))
+        # homo_co= ['ltv', 'since_rent', 'has_bb', 'age', 'is_ios', 'is_male']
+        p_arr = []
+        for h in tmp.columns:
+            test = [x[h].values for x in result]
+            stat, p = levene(*test)
+            pyval = p.item()
+            print(f'p-value due to Levene test for {h}:',
+                  '{0:4f}'.format(pyval))
+            p_arr.append(pyval)
         n += 1
-        if pyval > 0.05:
+        if all(i > 0.05 for i in p_arr):
             return result
             break
         elif n > 500:
+            return None
             break
+        # test_arr = [x['homo_t'].values for x in result]
+        # stat, p = levene(*test_arr)
+        # pyval = p.item()
+        # print('p-value due to Levene test:', '{0:4f}'.format(pyval))
+        # n += 1
+        # if pyval > 0.05:
+        #     return result
+        #     break
+        # elif n > 500:
+        #     return None
+        #     break
 
 
 """
@@ -78,7 +93,7 @@ def split_save(df, chunks):
         tmp = df.copy(deep=True)
         tmp = tmp[tmp['segment'].str.contains(k)]
         tmp.drop(columns=['segment'], inplace=True)
-        tmp = add_synth_test_col(tmp)
+        # tmp = add_synth_test_col(tmp)
         print(f"Sampling {v} chunks in {k}")
         result = shuffle_test(tmp, v)
         if result:
@@ -87,13 +102,15 @@ Levene test")
             print('Saving chunks...')
             names = [k + '_' + str(n) + '.csv' for n in range(1, v+1)]
             for part, name in zip(result, names):
-                part.drop(columns=['homo_t'], inplace=True)
+                part.reset_index(level=0, inplace=True)
+                tmp = part['user_id']
+                # part.drop(columns=['homo_t'], inplace=True)
                 outdir = './segments'
                 if not os.path.exists(outdir):
                     os.mkdir(outdir)
                 part.to_csv(os.path.join(outdir, name), encoding='utf-8')
         else:
-            print('Stop shuffling...')
+            print('Cant split segments correctly, script stopped.')
 
 
 if __name__ == "__main__":

@@ -1,30 +1,43 @@
+# -*- coding: utf-8 -*-
+
 from google.cloud import bigquery
 import pandas as pd
 import numpy as np
 from pathlib import Path
 
+import logging
+from google.oauth2 import service_account
 
-"""
-Функция обращается к BQ и возвращает df
-"""
+# загружаем данные для анализа
+# df = get_df_from_bq(sql2)
+# df.to_csv('test_df.csv', encoding='utf-8', index=False)
+
+logging.basicConfig(filename="segments.log", level=logging.INFO,
+                    format='%(message)s')
 
 
 def get_df_from_bq(QUERY):
-    client = bigquery.Client(project='carsharing-analytics')
-    query_job = client.query(QUERY)
-    return query_job.to_dataframe()
-
-
-"""
-Функция обрабатывает исходных df:
-- удалет строки с NULL
-- приводит платформу, пол и наличие доступа к BelkaBlack в бинарный вид
-"""
+    """
+    Функция обращается к BQ и возвращает df. Для запуска на локально машине
+    необходимо прописать в конфиге баш (zshrc etc) переменную:
+    $GOOGLE_APPLICATION_CREDENTIALS с абсолютным путем до json
+    c auth2 BQ
+    """
+    credentials = service_account.Credentials()
+    client = bigquery.Client(credentials=credentials,
+                             project='carsharing-analytics')
+    return client.query(QUERY).to_dataframe()
 
 
 def process_frame(df):
+    """
+    Функция обрабатывает исходных df:
+    - удалет строки с NULL
+    - приводит платформу, пол и наличие доступа к BelkaBlack в бинарный вид
+    """
     cnt = np.count_nonzero(df.isnull().values)
     df.dropna(inplace=True)
+    df.drop_duplicates(subset='user_id', keep='first', inplace=True)
     print(f'Removed rows with NULL:{cnt}')
     df['is_ios'] = (df['platform'] == 'ios').astype(int)
     df['is_male'] = (df['gender'] == 'm').astype(int)
@@ -34,13 +47,11 @@ def process_frame(df):
     return df
 
 
-"""
-Функция добавляет в исходный df совершавших ренты колонку с наименованием
-сегмента согласно бизнесс логике от Ilya Mikheev
-"""
-
-
 def add_riders_segment(df):
+    """
+    Функция добавляет в исходный df совершавших ренты колонку с наименованием
+    сегмента согласно бизнесс логике
+    """
     df['segment'] = np.nan
     df.loc[((df['ltv'] >= 7500) &
             (df['since_rent'].between(15, 89))), 'segment'] = 'SEG1'
@@ -63,14 +74,11 @@ def add_riders_segment(df):
     return df
 
 
-"""
-Функция добавляет в исходный df не совершавших ренты но одобренных
-пользователей колонку с наименованием сегмента согласно бизнесс логике
-от Ilya Mikheev
-"""
-
-
 def add_dormants_segment(df):
+    """
+    Функция добавляет в исходный df не совершавших ренты но одобренных
+    пользователей колонку с наименованием сегмента согласно бизнесс логике
+    """
     df['segment'] = np.nan
     df.loc[(df['dsa'] < 90), 'segment'] = 'SEG10'
     df.loc[((df['dsa'].between(90, 364))), 'segment'] = 'SEG11'
@@ -78,12 +86,10 @@ def add_dormants_segment(df):
     return df
 
 
-"""
-Функция отдаем финальный df с сегментами по ездевшим пользователям
-"""
-
-
 def get_riders_seg():
+    """
+    Функция отдаем финальный df с сегментами по ездевшим пользователям
+    """
     QUERY = (
         """SELECT
             user_id,
@@ -114,18 +120,18 @@ def get_riders_seg():
         df = process_frame(df)
         df.to_csv(file, encoding='utf-8')
 
-    # print(df.info())
+    print(df.info())
     print(df.groupby(['segment']).size())
+    logging.info("{}".format(df.info()))
+    logging.info("{}".format(df.groupby(['segment']).size()))
     return df
 
 
-"""
-Функция отдаем финальный df с сегментами по не ездевшим но одобренным
-пользователям
-"""
-
-
 def get_dormants_seg():
+    """
+    Функция отдаем финальный df с сегментами по не ездевшим но одобренным
+    пользователям
+    """
     QUERY = (
         """WITH
           sleepy AS (
@@ -170,6 +176,13 @@ def get_dormants_seg():
         df = add_dormants_segment(df)
         df = process_frame(df)
         df.to_csv(file, encoding='utf-8')
-    # print(df.info())
+    print()
     print(df.groupby(['segment']).size())
+    logging.info("{}".format(df.info()))
+    logging.info("{}".format(df.groupby(['segment']).size()))
     return df
+
+
+if __name__ == "__main__":
+    get_riders_seg()
+    get_dormants_seg()

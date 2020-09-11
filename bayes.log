@@ -1,0 +1,736 @@
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 15-89 дней - LTV 7500+
+
+CONTROL (A) размер группы 7062
+конверсия %22.8830
+
+
+TEST (B) размер группы 2757
+конверсия %15.5241
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 365+ дней - LTV 2000-7499
+
+CONTROL (A) размер группы 6473
+конверсия %1.1278
+
+
+TEST (B) размер группы 3470
+конверсия %1.0951
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 15-89 дней - LTV 2000-7499
+
+CONTROL (A) размер группы 8848
+конверсия %16.3088
+
+
+TEST (B) размер группы 3769
+конверсия %11.9130
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 365+ дней - LTV 2000-7499 - part 4
+
+CONTROL (A) размер группы 6473
+конверсия %1.2205
+
+
+TEST (B) размер группы 3465
+конверсия %0.9524
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 365+ дней - LTV 2000-7499 - part 2
+
+CONTROL (A) размер группы 6473
+конверсия %1.1278
+
+
+TEST (B) размер группы 3482
+конверсия %1.2062
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 365+ дней - LTV 2000-7499 - part 3
+
+CONTROL (A) размер группы 6473
+конверсия %1.2050
+
+
+TEST (B) размер группы 3428
+конверсия %1.0210
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 90-365 дней - LTV 7500+
+
+CONTROL (A) размер группы 7986
+конверсия %7.0498
+
+
+TEST (B) размер группы 3901
+конверсия %5.0244
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 90-365 дней - LTV 7500+ - part 2
+
+CONTROL (A) размер группы 7986
+конверсия %7.0373
+
+
+TEST (B) размер группы 3904
+конверсия %5.6096
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 90-365 дней - LTV 7500+ - part 3
+
+CONTROL (A) размер группы 7986
+конверсия %6.6241
+
+
+TEST (B) размер группы 3913
+конверсия %5.4178
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 90-365 дней - LTV 7500+ - part 4
+
+CONTROL (A) размер группы 7986
+конверсия %7.0624
+
+
+TEST (B) размер группы 3966
+конверсия %4.7151
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 365+ дней - LTV 7500+
+
+CONTROL (A) размер группы 9939
+конверсия %1.5193
+
+
+TEST (B) размер группы 5294
+конверсия %0.7745
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 90-365 дней - LTV 2000-7499
+
+CONTROL (A) размер группы 12208
+конверсия %4.5953
+
+
+TEST (B) размер группы 6146
+конверсия %3.8562
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 90-365 дней - LTV 2000-7499 - part 2
+
+CONTROL (A) размер группы 12208
+конверсия %4.7837
+
+
+TEST (B) размер группы 6161
+конверсия %3.3598
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 90-365 дней - LTV 2000-7499 - part 3
+
+CONTROL (A) размер группы 12208
+конверсия %4.6691
+
+
+TEST (B) размер группы 6169
+конверсия %3.4365
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 90-365 дней - LTV 2000-7499 - part 4
+
+CONTROL (A) размер группы 12208
+конверсия %4.2349
+
+
+TEST (B) размер группы 6177
+конверсия %3.2540
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 90-365 дней - LTV 2000-7499 - part 5
+
+CONTROL (A) размер группы 12208
+конверсия %4.4069
+
+
+TEST (B) размер группы 6259
+конверсия %3.2114
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 15-89 дней - LTV 0-1999
+
+CONTROL (A) размер группы 9271
+конверсия %11.3149
+
+
+TEST (B) размер группы 4341
+конверсия %7.2564
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 90-365 дней - LTV 0-1999
+
+CONTROL (A) размер группы 94203
+конверсия %2.5328
+
+
+TEST (B) размер группы 48883
+конверсия %1.9925
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - С арендами - Простой 365+ дней - LTV 0-1999
+
+CONTROL (A) размер группы 80770
+конверсия %0.8159
+
+
+TEST (B) размер группы 43020
+конверсия %0.6206
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - Без аренд - Простой 15-89 дней
+
+CONTROL (A) размер группы 9484
+конверсия %2.7731
+
+
+TEST (B) размер группы 4829
+конверсия %2.2158
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - Без аренд - Простой 90-365 дней
+
+CONTROL (A) размер группы 10127
+конверсия %0.9381
+
+
+TEST (B) размер группы 5335
+конверсия %0.5623
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - Без аренд - Простой 90-365 дней - part 2
+
+CONTROL (A) размер группы 10127
+конверсия %0.8097
+
+
+TEST (B) размер группы 5391
+конверсия %0.5194
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - Без аренд - Простой 90-365 дней - part 3
+
+CONTROL (A) размер группы 10127
+конверсия %1.0171
+
+
+TEST (B) размер группы 5401
+конверсия %0.6110
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - Без аренд - Простой 90-365 дней - part 4
+
+CONTROL (A) размер группы 10127
+конверсия %0.8887
+
+
+TEST (B) размер группы 5341
+конверсия %0.5617
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - Без аренд - Простой 90-365 дней - part 5
+
+CONTROL (A) размер группы 10127
+конверсия %0.8887
+
+
+TEST (B) размер группы 9500
+конверсия %0.8105
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - Без аренд - Простой 90-365 дней - part 6
+
+CONTROL (A) размер группы 10127
+конверсия %1.0862
+
+
+TEST (B) размер группы 9502
+конверсия %0.7156
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - Без аренд - Простой 365+ дней
+
+CONTROL (A) размер группы 17678
+конверсия %0.3451
+
+
+TEST (B) размер группы 9433
+конверсия %0.3180
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - Без аренд - Простой 365+ дней - part 2
+
+CONTROL (A) размер группы 17678
+конверсия %0.3733
+
+
+TEST (B) размер группы 9429
+конверсия %0.3712
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - Без аренд - Простой 365+ дней - part 3
+
+CONTROL (A) размер группы 17678
+конверсия %0.3620
+
+
+TEST (B) размер группы 9363
+конверсия %0.3097
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - Без аренд - Простой 365+ дней - part 4
+
+CONTROL (A) размер группы 17678
+конверсия %0.4695
+
+
+TEST (B) размер группы 9437
+конверсия %0.2331
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - Без аренд - Простой 365+ дней - part 5
+
+CONTROL (A) размер группы 17678
+конверсия %0.3847
+
+
+TEST (B) размер группы 9337
+конверсия %0.2463
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None
+
+Эксперимент в сегменте:
+Июль 2020 - Без аренд - Простой 365+ дней - part 6
+
+CONTROL (A) размер группы 17678
+конверсия %0.4525
+
+
+TEST (B) размер группы 9378
+конверсия %0.4159
+
+
+
+*** abyes ***
+
+Method = analytic
+Decision Rule = rope
+Alpha = 0.95
+Rope = (-0.1, 0.1)
+Decision Variable = lift
+* Result is conclusive: A and B variants are effectively equivalent!
+
+None

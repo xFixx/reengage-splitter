@@ -4,3 +4,4 @@ __pycache__
 *.sql
 test.py
 segments/
+datasets/
